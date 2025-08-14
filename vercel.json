@@ -1,13 +1,5 @@
 {
   "version": 2,
-  "functions": {
-    "api/solana-scan.js": {
-      "maxDuration": 30
-    },
-    "api/cors-test.js": {
-      "maxDuration": 10
-    }
-  },
   "headers": [
     {
       "source": "/api/(.*)",

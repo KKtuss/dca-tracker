@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DCA TRACKER - Local Server Setup</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            background: #000000;
+            color: #00ffff;
+            padding: 40px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(20, 20, 20, 0.9);
+            padding: 30px;
+            border-radius: 15px;
+            border: 2px solid #00ffff;
+        }
+        h1 {
+            text-align: center;
+            color: #00ffff;
+            text-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+        }
+        .step {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            border-left: 4px solid #00ffff;
+        }
+        .code {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            color: #00ff00;
+            border: 1px solid #333;
+            margin: 10px 0;
+        }
+        .warning {
+            background: rgba(255, 170, 0, 0.1);
+            border: 1px solid #ffaa00;
+            padding: 15px;
+            border-radius: 8px;
+            color: #ffaa00;
+        }
+        .success {
+            background: rgba(0, 255, 0, 0.1);
+            border: 1px solid #00ff00;
+            padding: 15px;
+            border-radius: 8px;
+            color: #00ff00;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 DCA TRACKER - Local Server Setup</h1>
+        
+        <div class="warning">
+            <strong>⚠️ CORS Issue Detected!</strong><br>
+            You're seeing CORS errors because you're opening the HTML file directly in your browser. 
+            This prevents the app from connecting to the backend API.
+        </div>
+
+        <div class="step">
+            <h3>🔧 Solution: Start a Local Server</h3>
+            <p>To fix the CORS issue and test your backend, you need to serve the HTML file from a local web server.</p>
+        </div>
+
+        <div class="step">
+            <h3>📋 Method 1: Python (Recommended)</h3>
+            <p>If you have Python installed:</p>
+            <div class="code">
+                # Navigate to your project folder in PowerShell/Terminal
+                cd "D:\CursorProj\INSIDERTRACKERBOT"
+                
+                # Start Python server (Python 3)
+                python -m http.server 8000
+                
+                # OR for Python 2
+                python -m SimpleHTTPServer 8000
+            </div>
+            <p>Then open: <strong>http://localhost:8000/insider-tracker-web.html</strong></p>
+        </div>
+
+        <div class="step">
+            <h3>📋 Method 2: Node.js</h3>
+            <p>If you have Node.js installed:</p>
+            <div class="code">
+                # Install http-server globally
+                npm install -g http-server
+                
+                # Navigate to your project folder
+                cd "D:\CursorProj\INSIDERTRACKERBOT"
+                
+                # Start server
+                http-server -p 8000
+            </div>
+            <p>Then open: <strong>http://localhost:8000/insider-tracker-web.html</strong></p>
+        </div>
+
+        <div class="step">
+            <h3>📋 Method 3: Live Server Extension (VS Code)</h3>
+            <p>If you're using VS Code:</p>
+            <ol>
+                <li>Install "Live Server" extension</li>
+                <li>Right-click on <code>insider-tracker-web.html</code></li>
+                <li>Select "Open with Live Server"</li>
+            </ol>
+        </div>
+
+        <div class="success">
+            <strong>✅ After Starting Local Server:</strong><br>
+            • CORS errors will disappear<br>
+            • Backend API will work properly<br>
+            • You can test real blockchain scanning<br>
+            • Enhanced Demo Mode will still work as fallback
+        </div>
+
+        <div class="step">
+            <h3>🔍 Test Your Setup</h3>
+            <p>Once you have the local server running:</p>
+            <ol>
+                <li>Open <strong>http://localhost:8000/insider-tracker-web.html</strong></li>
+                <li>Go to <strong>Settings</strong> tab</li>
+                <li>Click <strong>🧪 Test Backend</strong> button</li>
+                <li>You should see "✅ Backend API is reachable!"</li>
+                <li>Try scanning in the <strong>Scanner</strong> tab</li>
+            </ol>
+        </div>
+
+        <div class="step">
+            <h3>💡 Why This Happens</h3>
+            <p>Browsers block requests from local HTML files to external APIs for security reasons. 
+            A local server makes your HTML file "trusted" and allows API calls.</p>
+        </div>
+
+        <div class="step">
+            <h3>🚀 Alternative: Deploy to Web Server</h3>
+            <p>For production use, you can deploy your HTML file to:</p>
+            <ul>
+                <li><strong>GitHub Pages</strong> (free)</li>
+                <li><strong>Netlify</strong> (free)</li>
+                <li><strong>Vercel</strong> (free)</li>
+                <li>Any web hosting service</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
