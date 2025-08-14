@@ -697,6 +697,8 @@
                 <button class="btn btn-secondary" onclick="resetSettings()">🔄 Reset to Defaults</button>
                 <button class="btn btn-warning" onclick="testBackendConnection()">🧪 Test Backend</button>
                 <button class="btn btn-info" onclick="testSimpleCors()" style="margin-left: 10px;">🔍 Test CORS</button>
+                <button class="btn btn-success" onclick="testBackendNoCors()" style="margin-left: 10px;">🧪 Test GET Request</button>
+                <button class="btn btn-info" onclick="testSimpleEndpoint()" style="margin-left: 10px;">🧪 Test Simple Endpoint</button>
 
                 <div id="settingsStatus" class="alert alert-info" style="display: none;">
                     Settings saved successfully!
@@ -1947,6 +1949,60 @@ async function testBackendConnection() {
                  updateConnectionStatus('⚠️ Demo Mode Active', 'demo');
              }
          });
+
+        // Test backend without CORS issues
+        async function testBackendNoCors() {
+            const backendUrl = 'https://dcatracker-lsbu3pffp-kktuss-projects.vercel.app';
+            try {
+                console.log('Testing backend without CORS...');
+                
+                // Try a simple GET request first
+                const getResponse = await fetch(`${backendUrl}/api/cors-test`, {
+                    method: 'GET',
+                    signal: AbortSignal.timeout(10000)
+                });
+                
+                if (getResponse.ok) {
+                    const data = await getResponse.json();
+                    console.log('GET request successful:', data);
+                    alert(`✅ GET request successful!\n\nResponse: ${JSON.stringify(data, null, 2)}`);
+                } else {
+                    console.error('GET request failed:', getResponse.status);
+                    alert(`❌ GET request failed: ${getResponse.status}`);
+                }
+                
+            } catch (error) {
+                console.error('Backend test error:', error);
+                alert(`❌ Backend test error: ${error.message}`);
+            }
+        }
+
+        // Test the new simple endpoint
+        async function testSimpleEndpoint() {
+            const backendUrl = 'https://dcatracker-lsbu3pffp-kktuss-projects.vercel.app';
+            try {
+                console.log('Testing simple endpoint...');
+                
+                const response = await fetch(`${backendUrl}/api/test-simple`, {
+                    method: 'GET',
+                    signal: AbortSignal.timeout(10000)
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log('Simple endpoint successful:', data);
+                    alert(`✅ Simple endpoint successful!\n\nResponse: ${JSON.stringify(data, null, 2)}`);
+                } else {
+                    const errorText = await response.text();
+                    console.error('Simple endpoint failed:', response.status, errorText);
+                    alert(`❌ Simple endpoint failed: ${response.status}\n\nError: ${errorText}`);
+                }
+                
+            } catch (error) {
+                console.error('Simple endpoint test error:', error);
+                alert(`❌ Simple endpoint test error: ${error.message}`);
+            }
+        }
     </script>
 </body>
 </html>
