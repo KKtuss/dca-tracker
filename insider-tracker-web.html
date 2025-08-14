@@ -696,9 +696,10 @@
                 <button class="btn" onclick="saveSettings()">💾 Save Settings</button>
                 <button class="btn btn-secondary" onclick="resetSettings()">🔄 Reset to Defaults</button>
                 <button class="btn btn-warning" onclick="testBackendConnection()">🧪 Test Backend</button>
-                <button class="btn btn-info" onclick="testSimpleCors()" style="margin-left: 10px;">🔍 Test CORS</button>
-                <button class="btn btn-success" onclick="testBackendNoCors()" style="margin-left: 10px;">🧪 Test GET Request</button>
-                <button class="btn btn-info" onclick="testSimpleEndpoint()" style="margin-left: 10px;">🧪 Test Simple Endpoint</button>
+                        <button class="btn btn-info" onclick="testSimpleCors()" style="margin-left: 10px;">🔍 Test CORS</button>
+        <button class="btn btn-success" onclick="testBackendNoCors()" style="margin-left: 10px;">🧪 Test GET Request</button>
+        <button class="btn btn-info" onclick="testSimpleEndpoint()" style="margin-left: 10px;">🧪 Test Simple Endpoint</button>
+        <button class="btn btn-warning" onclick="testHelloEndpoint()" style="margin-left: 10px;">🧪 Test Hello</button>
 
                 <div id="settingsStatus" class="alert alert-info" style="display: none;">
                     Settings saved successfully!
@@ -2001,6 +2002,33 @@ async function testBackendConnection() {
             } catch (error) {
                 console.error('Simple endpoint test error:', error);
                 alert(`❌ Simple endpoint test error: ${error.message}`);
+            }
+        }
+
+        // Test the ultra-simple hello endpoint
+        async function testHelloEndpoint() {
+            const backendUrl = 'https://dcatracker-lsbu3pffp-kktuss-projects.vercel.app';
+            try {
+                console.log('Testing hello endpoint...');
+                
+                const response = await fetch(`${backendUrl}/api/hello`, {
+                    method: 'GET',
+                    signal: AbortSignal.timeout(10000)
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log('Hello endpoint successful:', data);
+                    alert(`✅ Hello endpoint successful!\n\nResponse: ${JSON.stringify(data, null, 2)}`);
+                } else {
+                    const errorText = await response.text();
+                    console.error('Hello endpoint failed:', response.status, errorText);
+                    alert(`❌ Hello endpoint failed: ${response.status}\n\nError: ${errorText}`);
+                }
+                
+            } catch (error) {
+                console.error('Hello endpoint test error:', error);
+                alert(`❌ Hello endpoint test error: ${error.message}`);
             }
         }
     </script>
