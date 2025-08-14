@@ -5,11 +5,12 @@ export default async function handler(req, res) {
     headers: req.headers
   });
 
-  // Set CORS headers explicitly
+  // Set ALL CORS headers explicitly
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With, Origin, Accept');
   res.setHeader('Access-Control-Max-Age', '86400');
+  res.setHeader('Access-Control-Allow-Credentials', 'false');
 
   // Handle preflight OPTIONS request
   if (req.method === 'OPTIONS') {
@@ -17,14 +18,16 @@ export default async function handler(req, res) {
     res.status(200).json({
       success: true,
       message: 'OPTIONS preflight successful',
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
+      method: 'OPTIONS',
+      cors: 'enabled'
     });
     return;
   }
 
   // Handle actual request
   console.log('Handling', req.method, 'request');
-  
+
   try {
     res.status(200).json({
       success: true,
@@ -32,7 +35,8 @@ export default async function handler(req, res) {
       timestamp: new Date().toISOString(),
       method: req.method,
       origin: req.headers.origin || 'unknown',
-      cors: 'enabled'
+      cors: 'enabled',
+      headers: Object.keys(req.headers)
     });
   } catch (error) {
     console.error('Error in cors-test:', error);

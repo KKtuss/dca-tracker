@@ -15,19 +15,28 @@ async function getRawBody(req) {
 }
 
 export default async function handler(req, res) {
-  // Enhanced CORS handling
+  console.log('Solana scan endpoint called:', {
+    method: req.method,
+    origin: req.headers.origin,
+    headers: req.headers
+  });
+
+  // Set ALL CORS headers explicitly
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');
-  res.setHeader('Access-Control-Max-Age', '86400'); // 24 hours
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With, Origin, Accept');
+  res.setHeader('Access-Control-Max-Age', '86400');
   res.setHeader('Access-Control-Allow-Credentials', 'false');
 
-  // Handle preflight OPTIONS request more explicitly
+  // Handle preflight OPTIONS request
   if (req.method === 'OPTIONS') {
+    console.log('Handling OPTIONS preflight request');
     res.status(200).json({
       success: true,
-      message: 'CORS preflight successful',
-      timestamp: new Date().toISOString()
+      message: 'OPTIONS preflight successful',
+      timestamp: new Date().toISOString(),
+      method: 'OPTIONS',
+      cors: 'enabled'
     });
     return;
   }
