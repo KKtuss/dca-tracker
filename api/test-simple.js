@@ -1,4 +1,4 @@
-// FORCE REDEPLOY - CORS FIX v3 - MINIMAL HEADERS
+// FORCE REDEPLOY - CORS FIX v4 - WRITEHEAD APPROACH
 export default function handler(req, res) {
   console.log('Simple test endpoint called:', {
     method: req.method,
@@ -6,23 +6,31 @@ export default function handler(req, res) {
     headers: req.headers
   });
 
-  // MINIMAL CORS headers - just the essential ones
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-
-  // Handle OPTIONS
+  // Handle OPTIONS FIRST
   if (req.method === 'OPTIONS') {
     console.log('Handling OPTIONS preflight request');
-    res.status(200).end();
+    res.writeHead(200, {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type',
+      'Content-Type': 'text/plain'
+    });
+    res.end('OK');
     return;
   }
 
   // Simple response
-  res.status(200).json({
+  res.writeHead(200, {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+    'Content-Type': 'application/json'
+  });
+  
+  res.end(JSON.stringify({
     message: 'Simple test working!',
     method: req.method,
     timestamp: new Date().toISOString(),
     origin: req.headers.origin || 'unknown',
     cors: 'enabled'
-  });
+  }));
 }
